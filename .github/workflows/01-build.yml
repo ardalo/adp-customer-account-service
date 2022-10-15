@@ -18,13 +18,7 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Build the tagged Docker image
-        run: ./gradlew bootBuildImage --imageName=ardalo/adp-customer-account-service --tags=ardalo/adp-customer-account-service:${{ github.sha }}
-      - name: Push the tagged Docker image
-        run: docker push ardalo/adp-customer-account-service:${{ github.sha }}
       - name: Build the latest Docker image
-        if: (github.event_name == 'push') && (github.ref == 'refs/heads/main')
-        run: ./gradlew bootBuildImage --imageName=ardalo/adp-customer-account-service --tags=ardalo/adp-customer-account-service:latest
+        run: ./gradlew bootBuildImage --imageName=ardalo/adp-customer-account-service
       - name: Push the latest Docker image
-        if: (github.event_name == 'push') && (github.ref == 'refs/heads/main')
         run: docker push ardalo/adp-customer-account-service:latest
