@@ -1,6 +1,6 @@
 version: "3"
 services:
-  adp-customer-accunt-service:
-    image: ardalo/adp-customer-accunt-service:latest
+  adp-customer-account-service:
+    image: ardalo/adp-customer-account-service:latest
     ports:
       - "8080:8080"
