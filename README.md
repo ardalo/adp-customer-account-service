@@ -2,7 +2,6 @@
 ![Build Status](https://github.com/ardalo/adp-customer-account-service/workflows/Build/badge.svg)
 ![License](https://img.shields.io/github/license/ardalo/adp-customer-account-service)
 [![Code Coverage](https://sonarcloud.io/api/project_badges/measure?project=ardalo_adp-customer-account-service&metric=coverage)](https://sonarcloud.io/summary/new_code?id=ardalo_adp-customer-account-service)
-[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=ardalo_adp-customer-account-service&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=ardalo_adp-customer-account-service)
 
 Ardalo Digital Platform service taking care of the customer account domain.
 
