@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: adp-customer-account-service
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: adp-customer-account-service
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  minReadySeconds: 5
+  template:
+    metadata:
+      labels:
+        app: adp-customer-account-service
+    spec:
+      containers:
+        - name: adp-customer-account-service
+          image: ardalo/adp-customer-account-service:latest
+          ports:
+            - containerPort: 8080
+          resources:
+            requests:
+              cpu: 100m
+            limits:
+              cpu: 100m
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: adp-customer-account-service
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
+      targetPort: 8080
+  selector:
+    app: adp-customer-account-service
