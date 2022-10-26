@@ -1,9 +1,12 @@
 name: Deploy to Google K8s Engine
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
+  workflow_run:
+    workflows: ["Build"]
+    branches: [main]
+    types:
+      - completed
 
 env:
   PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
@@ -23,15 +26,14 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       # Authenticate via Service Account Key JSON. Use Workload Identity Federation in the future
-      - id: auth
-        name: Authenticate to Google Cloud
+      - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v0
         with:
           credentials_json: '${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}'
-      - uses: google-github-actions/setup-gcloud@v0
-      - name: Get GKE credentials so we can deploy to the cluster
-        run: |-
-          gcloud container clusters get-credentials "$GKE_CLUSTER" --zone "$GKE_ZONE"
+      - uses: google-github-actions/get-gke-credentials@v0
+        with:
+          cluster_name: $GKE_CLUSTER
+          location: $GKE_ZONE
       - name: Deploy
         run: |-
           kubectl apply -f deployment/k8s/deployment.yml
