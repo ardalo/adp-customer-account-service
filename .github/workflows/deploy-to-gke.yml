@@ -30,10 +30,8 @@ jobs:
         uses: google-github-actions/auth@v0
         with:
           credentials_json: '${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}'
-      - uses: google-github-actions/get-gke-credentials@v0
-        with:
-          cluster_name: "$GKE_CLUSTER"
-          location: "$GKE_ZONE"
+      - run: |-
+          gcloud container clusters get-credentials "$GKE_CLUSTER" --zone "$GKE_ZONE"
       - name: Deploy
         run: |-
           kubectl apply -f deployment/k8s/deployment.yml
