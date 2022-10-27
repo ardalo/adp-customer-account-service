@@ -33,14 +33,6 @@ spec:
             limits:
               memory: 1Gi
               cpu: 300m
-          livenessProbe:
-            httpGet:
-              path: /alive
-              port: http
-          readinessProbe:
-            httpGet:
-              path: /ready
-              port: http
 ---
 apiVersion: v1
 kind: Service
