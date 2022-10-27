@@ -30,8 +30,10 @@ jobs:
         uses: google-github-actions/auth@v0
         with:
           credentials_json: '${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}'
-      - run: |-
-          gcloud container clusters get-credentials "$GKE_CLUSTER" --zone "$GKE_ZONE"
+      - uses: google-github-actions/get-gke-credentials@v0
+        with:
+          cluster_name: autopilot-cluster-1
+          location: us-central1
       - name: Deploy
         timeout-minutes: 5
         run: |-
