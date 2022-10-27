@@ -34,15 +34,15 @@ spec:
               memory: 1Gi
               cpu: 300m
           livenessProbe:
+            initialDelaySeconds: 30
             httpGet:
               path: /alive
-              port: 8080
-            initialDelaySeconds: 20
+              port: http
           readinessProbe:
+            initialDelaySeconds: 30
             httpGet:
               path: /ready
-              port: 8080
-            initialDelaySeconds: 20
+              port: http
 ---
 apiVersion: v1
 kind: Service
