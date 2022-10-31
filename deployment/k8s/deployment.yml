@@ -5,7 +5,7 @@ metadata:
   labels:
     app: adp-customer-account-service
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: adp-customer-account-service
@@ -13,7 +13,6 @@ spec:
     rollingUpdate:
       maxSurge: 1
       maxUnavailable: 1
-  minReadySeconds: 5
   template:
     metadata:
       labels:
@@ -22,14 +21,13 @@ spec:
       containers:
         - name: adp-customer-account-service
           image: ardalo/adp-customer-account-service:latest
+          imagePullPolicy: Always
           ports:
-            - name: http
-              containerPort: 8080
-              protocol: TCP
+            - containerPort: 8080
           resources:
             requests:
               memory: 700Mi
-              cpu: 200m
+              cpu: 100m
             limits:
               memory: 1Gi
               cpu: 300m
@@ -37,11 +35,11 @@ spec:
             initialDelaySeconds: 60
             httpGet:
               path: /alive
-              port: http
+              port: 8080
           readinessProbe:
             httpGet:
               path: /ready
-              port: http
+              port: 8080
 ---
 apiVersion: v1
 kind: Service
@@ -53,26 +51,35 @@ spec:
   type: ClusterIP
   ports:
     - port: 80
-      targetPort: http
-      protocol: TCP
-      name: http
+      targetPort: 8080
   selector:
     app: adp-customer-account-service
 ---
-apiVersion: networking.k8s.io/v1
-kind: Ingress
+apiVersion: gateway.networking.k8s.io/v1beta1
+kind: Gateway
 metadata:
-  name: adp-customer-account-service
-  labels:
-    app: adp-customer-account-service
+  name: prod-web
 spec:
+  gatewayClassName: gke-l7-gxlb
+  listeners:
+    - name: prod-web-gw
+      protocol: HTTP
+      port: 80
+      allowedRoutes:
+        kinds:
+          - kind: HTTPRoute
+---
+apiVersion: gateway.networking.k8s.io/v1beta1
+kind: HTTPRoute
+metadata:
+  name: adp-customer-account-service-alive
+spec:
+  parentRefs:
+    - name: prod-web
   rules:
-    - http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: adp-customer-account-service
-                port:
-                  number: 80
+    - matches:
+        - path:
+            value: /alive
+      backendRefs:
+        - name: adp-customer-account-service
+          port: 80
