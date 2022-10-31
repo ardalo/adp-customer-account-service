@@ -54,36 +54,50 @@ spec:
       targetPort: 8080
   selector:
     app: adp-customer-account-service
----
-apiVersion: gateway.networking.k8s.io/v1beta1
-kind: GatewayClass
-metadata:
-  name: contour
-spec:
-  controllerName: projectcontour.io/projectcontour/contour
+#---
+#apiVersion: gateway.networking.k8s.io/v1beta1
+#kind: GatewayClass
+#metadata:
+#  name: contour
+#spec:
+#  controllerName: projectcontour.io/projectcontour/contour
+#---
+#apiVersion: gateway.networking.k8s.io/v1beta1
+#kind: Gateway
+#metadata:
+#  name: contour
+#spec:
+#  gatewayClassName: contour
+#  listeners:
+#    - name: http
+#      protocol: HTTP
+#      port: 80
+#      allowedRoutes:
+#        namespaces:
+#          from: All
+#---
+#kind: ConfigMap
+#apiVersion: v1
+#metadata:
+#  name: contour
+#data:
+#  contour.yaml: |
+#    gateway:
+#      controllerName: projectcontour.io/projectcontour/contour
 ---
 apiVersion: gateway.networking.k8s.io/v1beta1
 kind: Gateway
 metadata:
-  name: contour
+  name: prod-web
 spec:
-  gatewayClassName: contour
+  gatewayClassName: gke-l7-gxlb
   listeners:
-    - name: http
+    - name: prod-web-gw
       protocol: HTTP
       port: 80
       allowedRoutes:
-        namespaces:
-          from: All
----
-kind: ConfigMap
-apiVersion: v1
-metadata:
-  name: contour
-data:
-  contour.yaml: |
-    gateway:
-      controllerName: projectcontour.io/projectcontour/contour
+        kinds:
+          - kind: HTTPRoute
 ---
 apiVersion: gateway.networking.k8s.io/v1beta1
 kind: HTTPRoute
@@ -91,7 +105,7 @@ metadata:
   name: adp-customer-account-service-alive
 spec:
   parentRefs:
-    - name: contour
+    - name: prod-web
   rules:
     - matches:
         - path:
