@@ -30,8 +30,8 @@ jobs:
         with:
           cluster_name: ${{ env.GKE_CLUSTER }}
           location: ${{ env.GKE_ZONE }}
-      - name: Install Gateway API (Experimental)
-        run: kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v0.5.1/experimental-install.yaml
+#      - name: Install Gateway API (Experimental)
+#        run: kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v0.5.1/experimental-install.yaml
       - name: Deploy
         timeout-minutes: 6
         run: |-
