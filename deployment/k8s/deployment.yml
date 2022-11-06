@@ -94,8 +94,8 @@ spec:
   rules:
     - http:
         paths:
-          - path: /
-            pathType: Prefix
+          - path: /alive
+            pathType: Exact
             backend:
               service:
                 name: adp-customer-account-service
