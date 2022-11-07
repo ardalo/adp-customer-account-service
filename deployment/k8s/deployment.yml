@@ -93,7 +93,6 @@ metadata:
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /api/pages/login
 spec:
-  ingressClassName: nginx
   rules:
     - http:
         paths:
@@ -114,7 +113,6 @@ metadata:
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /api/pages/register
 spec:
-  ingressClassName: nginx
   rules:
     - http:
         paths:
@@ -135,7 +133,6 @@ metadata:
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /api/pages/my-account
 spec:
-  ingressClassName: nginx
   rules:
     - http:
         paths:
