@@ -90,11 +90,56 @@ metadata:
   name: adp-customer-account-service
   labels:
     app: adp-customer-account-service
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /api/pages/login
 spec:
+  ingressClassName: nginx
   rules:
     - http:
         paths:
-          - path: /alive
+          - path: /login
+            pathType: Exact
+            backend:
+              service:
+                name: adp-customer-account-service
+                port:
+                  number: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: adp-customer-account-service
+  labels:
+    app: adp-customer-account-service
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /api/pages/register
+spec:
+  ingressClassName: nginx
+  rules:
+    - http:
+        paths:
+          - path: /register
+            pathType: Exact
+            backend:
+              service:
+                name: adp-customer-account-service
+                port:
+                  number: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: adp-customer-account-service
+  labels:
+    app: adp-customer-account-service
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /api/pages/my-account
+spec:
+  ingressClassName: nginx
+  rules:
+    - http:
+        paths:
+          - path: /my/account
             pathType: Exact
             backend:
               service:
