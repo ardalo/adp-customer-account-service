@@ -87,11 +87,10 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: adp-customer-account-service
+  name: adp-customer-account-service-register
   labels:
     app: adp-customer-account-service
   annotations:
-    nginx.ingress.kubernetes.io/use-regex: "true"
     nginx.ingress.kubernetes.io/rewrite-target: /api/pages/register
 spec:
   ingressClassName: nginx
@@ -109,11 +108,10 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: adp-customer-account-service
+  name: adp-customer-account-service-login
   labels:
     app: adp-customer-account-service
   annotations:
-    nginx.ingress.kubernetes.io/use-regex: "true"
     nginx.ingress.kubernetes.io/rewrite-target: /api/pages/login
 spec:
   ingressClassName: nginx
@@ -131,11 +129,10 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: adp-customer-account-service
+  name: adp-customer-account-service-my-account
   labels:
     app: adp-customer-account-service
   annotations:
-    nginx.ingress.kubernetes.io/use-regex: "true"
     nginx.ingress.kubernetes.io/rewrite-target: /api/pages/my-account
 spec:
   ingressClassName: nginx
