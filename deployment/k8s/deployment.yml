@@ -97,8 +97,8 @@ spec:
   rules:
     - http:
         paths:
-          - path: /register
-            pathType: Exact
+          - path: /register(/|$)
+            pathType: Prefix
             backend:
               service:
                 name: adp-customer-account-service
