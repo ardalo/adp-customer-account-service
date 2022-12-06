@@ -43,6 +43,6 @@ jobs:
             --values deployment/helm/values.yml \
             --wait \
             ${{ env.DEPLOYMENT_NAME }} \
-            ../../deployment/helm
+            ./deployment/helm/Chart.yaml
           kubectl rollout status deployment/$DEPLOYMENT_NAME
           kubectl get services -o wide
