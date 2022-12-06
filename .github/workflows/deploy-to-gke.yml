@@ -31,14 +31,15 @@ jobs:
           cluster_name: ${{ env.GKE_CLUSTER }}
           location: ${{ env.GKE_ZONE }}
       - name: Deploy
-        timeout-minutes: 6
         run: |-
-          helm upgrade $DEPLOYMENT_NAME deployment/helm \
+          helm upgrade
+            $DEPLOYMENT_NAME \
+            deployment/helm \
             --atomic \
             --cleanup-on-fail \
             --debug \
             --install \
-            --timeout 4m \
+            --timeout 3m \
             --values deployment/helm/values.yaml \
             --wait
           kubectl rollout status deployment/$DEPLOYMENT_NAME
