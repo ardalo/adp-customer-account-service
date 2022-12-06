@@ -39,7 +39,7 @@ jobs:
             --debug \
             --install \
             --timeout 4m \
-            --values deployment/helm/values.yml \
+            --values deployment/helm/values.yaml \
             --wait
           kubectl rollout status deployment/$DEPLOYMENT_NAME
           kubectl get services -o wide
