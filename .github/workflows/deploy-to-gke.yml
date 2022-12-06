@@ -36,7 +36,7 @@ jobs:
           helm upgrade \
             --atomic \
             --cleanup-on-fail \
-            --debug
+            --debug \
             --install \
             --timeout 4m \
             --values deployment/helm/values.yml \
