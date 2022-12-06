@@ -29,10 +29,17 @@ ingress:
   rules:
     - id: login
       sourcePath: /login
+      pathType: Exact
       destinationPath: /api/pages/login
     - id: register
       sourcePath: /register
+      pathType: Exact
       destinationPath: /api/pages/register
     - id: my-account
       sourcePath: /my/account
+      pathType: Exact
       destinationPath: /api/pages/my-account
+    - id: global-404
+      sourcePath: /
+      pathType: Prefix
+      destinationPath: /api/pages/404

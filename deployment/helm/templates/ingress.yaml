@@ -13,7 +13,7 @@ spec:
     - http:
         paths:
           - path: {{ .sourcePath }}
-            pathType: ImplementationSpecific
+            pathType: {{ .pathType }}
             backend:
               service:
                 name: {{ $.Release.Name }}
