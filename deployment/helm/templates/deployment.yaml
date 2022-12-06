@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+  labels:
+    app: {{ .Release.Name }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+  strategy:
+    rollingUpdate:
+      maxSurge: {{ .Values.rollingUpdateMaxSurge }}
+      maxUnavailable: {{ .Values.rollingUpdateMaxUnavailable }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.app.internalPort }}
+          resources:
+            requests:
+              memory: {{ .Values.app.minMemory }}
+              cpu: {{ .Values.app.minCpu }}
+            limits:
+              memory: {{ .Values.app.maxMemory }}
+              cpu: {{ .Values.app.maxCpu }}
+          livenessProbe:
+            initialDelaySeconds: {{ .Values.app.livenessProbe.initialDelaySeconds }}
+            httpGet:
+              path: {{ .Values.app.livenessProbe.path }}
+              port: {{ .Values.app.livenessProbe.port }}
+          readinessProbe:
+            httpGet:
+              path: {{ .Values.app.readinessProbe.path }}
+              port: {{ .Values.app.readinessProbe.port }}

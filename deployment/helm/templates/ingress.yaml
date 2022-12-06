@@ -1,0 +1,22 @@
+{{- range .Values.ingress.rules }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: "{{ $.Release.Name }}-ingress-{{ .id }}"
+  labels:
+    app: {{ $.Release.Name }}
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: {{ .destinationPath }}
+spec:
+  ingressClassName: {{ $.Values.ingress.className }}
+  rules:
+    - http:
+        paths:
+          - path: {{ .sourcePath }}
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: {{ $.Release.Name }}
+                port:
+                  number: {{ $.Values.service.externalPort }}
+{{- end }}

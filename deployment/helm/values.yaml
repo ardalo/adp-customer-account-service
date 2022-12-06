@@ -1,0 +1,38 @@
+replicaCount: 1
+rollingUpdateMaxSurge: 1
+rollingUpdateMaxUnavailable: 1
+
+image:
+  repository: ardalo/adp-customer-account-service
+  tag: latest
+  pullPolicy: Always
+
+app:
+  internalPort: 8080
+  minMemory: 700Mi
+  maxMemory: 1Gi
+  minCpu: 100m
+  maxCpu: 300m
+  livenessProbe:
+    initialDelaySeconds: 60
+    path: /alive
+    port: 8080
+  readinessProbe:
+    path: /ready
+    port: 8080
+
+service:
+  externalPort: 80
+
+ingress:
+  className: nginx
+  rules:
+    - id: login
+      sourcePath: /login
+      destinationPath: /api/pages/login
+    - id: register
+      sourcePath: /register
+      destinationPath: /api/pages/register
+    - id: my-account
+      sourcePath: /my/account
+      destinationPath: /api/pages/my-account
