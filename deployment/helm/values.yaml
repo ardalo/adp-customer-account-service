@@ -41,5 +41,5 @@ ingress:
       destinationPath: /api/pages/my-account
     - id: global-404
       sourcePath: /
-      pathType: Prefix
+      pathType: ImplementationSpecific
       destinationPath: /api/pages/404
