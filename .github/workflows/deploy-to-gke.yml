@@ -34,13 +34,13 @@ jobs:
         timeout-minutes: 6
         run: |-
           helm upgrade \
-            --install \
-            --debug \
-            --wait \
-            --timeout 2m \
+            $DEPLOYMENT_NAME \
+            deployment/helm \
+            --atomic \
             --cleanup-on-fail \
-            --namespace default \
-            -f deployment/helm/values.yml \
-            deployment/helm
+            --install \
+            --timeout 4m \
+            --values deployment/helm/values.yml \
+            --wait \
           kubectl rollout status deployment/$DEPLOYMENT_NAME
           kubectl get services -o wide
