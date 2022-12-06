@@ -19,4 +19,5 @@ spec:
                 name: {{ $.Release.Name }}
                 port:
                   number: {{ $.Values.service.externalPort }}
+---
 {{- end }}
