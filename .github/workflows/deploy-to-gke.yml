@@ -33,6 +33,14 @@ jobs:
       - name: Deploy
         timeout-minutes: 6
         run: |-
-          kubectl apply -f deployment/k8s/deployment.yml
+          helm upgrade \
+            --install \
+            --debug \
+            --wait \
+            --timeout 2m \
+            --cleanup-on-fail \
+            --namespace default \
+            -f deployment/helm/values.yml \
+            deployment/helm
           kubectl rollout status deployment/$DEPLOYMENT_NAME
           kubectl get services -o wide
