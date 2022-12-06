@@ -40,7 +40,7 @@ jobs:
             --timeout 4m \
             --values deployment/helm/values.yml \
             --wait \
-            $DEPLOYMENT_NAME \
-            ./deployment/helm
+            ${{ env.DEPLOYMENT_NAME }} \
+            deployment/helm
           kubectl rollout status deployment/$DEPLOYMENT_NAME
           kubectl get services -o wide
