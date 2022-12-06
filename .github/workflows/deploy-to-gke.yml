@@ -33,16 +33,13 @@ jobs:
       - name: Deploy
         timeout-minutes: 6
         run: |-
-          pwd
-          helm upgrade \
+          helm upgrade $DEPLOYMENT_NAME deployment/helm \
             --atomic \
             --cleanup-on-fail \
             --debug \
             --install \
             --timeout 4m \
             --values deployment/helm/values.yml \
-            --wait \
-            ${{ env.DEPLOYMENT_NAME }} \
-            ./deployment/helm/Chart.yaml
+            --wait
           kubectl rollout status deployment/$DEPLOYMENT_NAME
           kubectl get services -o wide
