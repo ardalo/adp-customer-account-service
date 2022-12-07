@@ -42,4 +42,4 @@ ingress:
     - id: global-404
       sourcePath: /
       pathType: ImplementationSpecific
-      destinationPath: /api/pages/404
+      destinationPath: /api/pages/login
