@@ -32,7 +32,7 @@ jobs:
           location: ${{ env.GKE_ZONE }}
       - name: Deploy
         run: |-
-          helm upgrade
+          helm upgrade \
             $DEPLOYMENT_NAME \
             deployment/helm \
             --atomic \
