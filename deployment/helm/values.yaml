@@ -15,9 +15,12 @@ app:
   maxCpu: 300m
   livenessProbe:
     initialDelaySeconds: 60
+    periodSeconds: 30
     path: /alive
     port: 8080
   readinessProbe:
+    initialDelaySeconds: 60
+    periodSeconds: 10
     path: /ready
     port: 8080
 

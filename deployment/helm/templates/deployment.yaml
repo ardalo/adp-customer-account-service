@@ -36,10 +36,13 @@ spec:
               cpu: {{ .Values.app.maxCpu }}
           livenessProbe:
             initialDelaySeconds: {{ .Values.app.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.app.livenessProbe.periodSeconds }}
             httpGet:
               path: {{ .Values.app.livenessProbe.path }}
               port: {{ .Values.app.livenessProbe.port }}
           readinessProbe:
+            initialDelaySeconds: {{ .Values.app.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.app.readinessProbe.periodSeconds }}
             httpGet:
               path: {{ .Values.app.readinessProbe.path }}
               port: {{ .Values.app.readinessProbe.port }}
