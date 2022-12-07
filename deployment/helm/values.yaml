@@ -28,7 +28,7 @@ service:
   externalPort: 80
 
 ingress:
-  className: nginx
+  className: traefik
   rules:
     - id: login
       sourcePath: /login
