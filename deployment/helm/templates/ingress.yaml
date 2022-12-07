@@ -1,21 +1,17 @@
-apiVersion: networking.k8s.io/v1
-kind: Ingress
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
 metadata:
-  name: "{{ $.Release.Name }}-ingress-test"
-  labels:
-    app: {{ $.Release.Name }}
+  name: simpleingressroute
+  namespace: default
 spec:
-  ingressClassName: {{ $.Values.ingress.className }}
-  rules:
-    - http:
-        paths:
-          - path: /login
-            pathType: ImplementationSpecific
-            backend:
-              service:
-                name: {{ $.Release.Name }}
-                port:
-                  number: {{ $.Values.service.externalPort }}
+  entryPoints:
+    - web
+  routes:
+    - match: PathPrefix(`/login`)
+      kind: Rule
+      services:
+        - name: {{ $.Release.Name }}
+          port: {{ $.Values.service.externalPort }}
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
