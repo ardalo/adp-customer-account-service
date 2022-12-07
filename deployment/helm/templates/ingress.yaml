@@ -23,5 +23,5 @@ metadata:
   name: test-replacepathregex
 spec:
   replacePathRegex:
-    regex: ^/login$
+    regex: ^/login(.*)
     replacement: /api/pages/login
