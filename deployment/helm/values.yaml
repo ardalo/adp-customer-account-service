@@ -29,20 +29,25 @@ service:
 
 ingress:
   className: traefik
-  rules:
+  routes:
     - id: login
-      sourcePath: /login
-      pathType: Exact
-      destinationPath: /api/pages/login
+      match: Path(`/login`)
+      pathRewrite:
+        regex: ^/login$
+        replacement: /api/pages/login
     - id: register
-      sourcePath: /register
-      pathType: Exact
-      destinationPath: /api/pages/register
+      match: Path(`/register`)
+      pathRewrite:
+        regex: ^/register
+        replacement: /api/pages/register
     - id: my-account
-      sourcePath: /my/account
-      pathType: Exact
-      destinationPath: /api/pages/my-account
+      match: Path(`/my/account`)
+      pathRewrite:
+        regex: ^/my\/account$
+        replacement: /api/pages/my-account
     - id: global-404
-      sourcePath: /
-      pathType: ImplementationSpecific
-      destinationPath: /api/pages/404
+      match: PathPrefix(`/`)
+      priority: 1
+      pathRewrite:
+        regex: ^/(.*)
+        replacement: /api/pages/404

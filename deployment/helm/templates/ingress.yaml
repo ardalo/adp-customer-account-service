@@ -1,100 +1,28 @@
+{{- range .Values.ingress.routes }}
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
-  name: "{{ .Release.Name }}-ingress-login"
+  name: "{{ $.Release.Name }}-ingress-route-{{ .id }}"
 spec:
   entryPoints:
     - web
   routes:
-    - match: Path(`/login`)
+    - match: {{ .match }}
       kind: Rule
       services:
-        - name: {{ .Release.Name }}
-          port: {{ .Values.service.externalPort }}
+        - name: {{ $.Release.Name }}
+          port: {{ $.Values.service.externalPort }}
       middlewares:
-        - name: "{{ .Release.Name }}-ingress-login-path-mapper"
+        - name: "{{ $.Release.Name }}-ingress-route-{{ .id }}-path-rewriter"
+      {{ if .priority }}priority: {{ .priority }}{{ end }}
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
 metadata:
-  name: "{{ .Release.Name }}-ingress-login-path-mapper"
+  name: "{{ $.Release.Name }}-ingress-route-{{ .id }}-path-rewriter"
 spec:
   replacePathRegex:
-    regex: ^/login$
-    replacement: /api/pages/login
+    regex: {{ .pathRewrite.regex }}
+    replacement: {{ .pathRewrite.replacement }}
 ---
-apiVersion: traefik.containo.us/v1alpha1
-kind: IngressRoute
-metadata:
-  name: "{{ .Release.Name }}-ingress-register"
-spec:
-  entryPoints:
-    - web
-  routes:
-    - match: Path(`/register`)
-      kind: Rule
-      services:
-        - name: {{ .Release.Name }}
-          port: {{ .Values.service.externalPort }}
-      middlewares:
-        - name: "{{ .Release.Name }}-ingress-register-path-mapper"
----
-apiVersion: traefik.containo.us/v1alpha1
-kind: Middleware
-metadata:
-  name: "{{ .Release.Name }}-ingress-register-path-mapper"
-spec:
-  replacePathRegex:
-    regex: ^/register$
-    replacement: /api/pages/register
----
-apiVersion: traefik.containo.us/v1alpha1
-kind: IngressRoute
-metadata:
-  name: "{{ .Release.Name }}-ingress-my-account"
-spec:
-  entryPoints:
-    - web
-  routes:
-    - match: Path(`/my/account`)
-      kind: Rule
-      services:
-        - name: {{ .Release.Name }}
-          port: {{ .Values.service.externalPort }}
-      middlewares:
-        - name: "{{ .Release.Name }}-ingress-my-account-path-mapper"
----
-apiVersion: traefik.containo.us/v1alpha1
-kind: Middleware
-metadata:
-  name: "{{ .Release.Name }}-ingress-my-account-path-mapper"
-spec:
-  replacePathRegex:
-    regex: ^/my\/account$
-    replacement: /api/pages/my-account
----
-apiVersion: traefik.containo.us/v1alpha1
-kind: IngressRoute
-metadata:
-  name: "{{ .Release.Name }}-ingress-global-404"
-spec:
-  entryPoints:
-    - web
-  routes:
-    - match: PathPrefix(`/`)
-      kind: Rule
-      services:
-        - name: {{ .Release.Name }}
-          port: {{ .Values.service.externalPort }}
-      middlewares:
-        - name: "{{ .Release.Name }}-ingress-global-404-path-mapper"
-      priority: 1
----
-apiVersion: traefik.containo.us/v1alpha1
-kind: Middleware
-metadata:
-  name: "{{ .Release.Name }}-ingress-global-404-path-mapper"
-spec:
-  replacePathRegex:
-    regex: ^/(.*)
-    replacement: /api/pages/404
+{{- end }}

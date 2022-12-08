@@ -37,6 +37,7 @@ jobs:
             deployment/helm \
             --atomic \
             --cleanup-on-fail \
+            --debug \
             --install \
             --timeout 3m \
             --values deployment/helm/values.yaml \
