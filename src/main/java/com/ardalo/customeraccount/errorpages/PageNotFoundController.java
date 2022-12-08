@@ -9,6 +9,8 @@ public class PageNotFoundController {
 
   @GetMapping("/api/pages/404")
   public ModelAndView notFoundPage() {
-    return new ModelAndView("notFoundPage");
+    ModelAndView modelAndView = new ModelAndView("notFoundPage");
+    modelAndView.getModel().put("originalPath", "not implemented yet");
+    return modelAndView;
   }
 }

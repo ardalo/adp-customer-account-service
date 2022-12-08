@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
@@ -8,6 +8,7 @@
 <body>
 <div class="frontpage-content-wrapper">
   <h1>404 Not Found</h1>
+  <p th:text="${originalPath}"/>
   <p><a href="/register">Register</a></p>
   <p><a href="/my/account">My Account</a></p>
   <p><a href="/login">Login</a></p>
