@@ -13,7 +13,6 @@ spec:
           port: {{ .Values.service.externalPort }}
       middlewares:
         - name: "{{ .Release.Name }}-ingress-login-path-mapper"
-          namespace: default
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
@@ -39,7 +38,6 @@ spec:
           port: {{ .Values.service.externalPort }}
       middlewares:
         - name: "{{ .Release.Name }}-ingress-register-path-mapper"
-          namespace: default
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
@@ -65,7 +63,6 @@ spec:
           port: {{ .Values.service.externalPort }}
       middlewares:
         - name: "{{ .Release.Name }}-ingress-my-account-path-mapper"
-          namespace: default
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
@@ -73,7 +70,7 @@ metadata:
   name: "{{ .Release.Name }}-ingress-my-account-path-mapper"
 spec:
   replacePathRegex:
-    regex: ^/my/account$
+    regex: ^/my\/account$
     replacement: /api/pages/my-account
 ---
 apiVersion: traefik.containo.us/v1alpha1
@@ -91,7 +88,7 @@ spec:
           port: {{ .Values.service.externalPort }}
       middlewares:
         - name: "{{ .Release.Name }}-ingress-global-404-path-mapper"
-          namespace: default
+      priority: 1
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
@@ -99,5 +96,5 @@ metadata:
   name: "{{ .Release.Name }}-ingress-global-404-path-mapper"
 spec:
   replacePathRegex:
-    regex: ^/(.*)$
+    regex: ^/(.*)
     replacement: /api/pages/404
