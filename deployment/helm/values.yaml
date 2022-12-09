@@ -32,22 +32,23 @@ ingress:
   routes:
     - id: login
       match: Path(`/login`)
-      pathRewrite:
-        regex: ^/login$
-        replacement: /api/pages/login
+      middlewareSpec:
+        replacePath:
+          path: /api/pages/login
     - id: register
       match: Path(`/register`)
-      pathRewrite:
-        regex: ^/register
-        replacement: /api/pages/register
+      middlewareSpec:
+        replacePath:
+          path: /api/pages/register
     - id: my-account
       match: Path(`/my/account`)
-      pathRewrite:
-        regex: ^/my\/account$
-        replacement: /api/pages/my-account
+      middlewareSpec:
+        replacePath:
+          path: /api/pages/my-account
     - id: global-404
       match: PathPrefix(`/`)
       priority: 1
-      pathRewrite:
-        regex: ^/(.*)
-        replacement: /api/pages/404
+      middlewareSpec:
+        replacePathRegex:
+          regex: ^/(.*)
+          replacement: /api/pages/404

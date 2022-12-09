@@ -20,9 +20,6 @@ apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
 metadata:
   name: "{{ $.Release.Name }}-ingress-route-{{ .id }}-path-rewriter"
-spec:
-  replacePathRegex:
-    regex: {{ .pathRewrite.regex }}
-    replacement: {{ .pathRewrite.replacement }}
+spec: {{- .middlewareSpec | toYaml | trim | nindent 2 }}
 ---
 {{- end }}
