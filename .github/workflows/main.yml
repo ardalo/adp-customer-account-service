@@ -48,7 +48,7 @@ jobs:
           ./gradlew bootBuildImage --imageName=${{ env.DOCKER_IMAGE_NAME }}:${{ github.sha }}
           docker push ${{ env.DOCKER_IMAGE_NAME }}:${{ github.sha }}
       - name: Build and push latest Docker image
-        if: (github.event_name == 'push') && (github.ref == 'refs/heads/main')
+        if: github.ref == 'refs/heads/main'
         run: |
           ./gradlew bootBuildImage --imageName=${{ env.DOCKER_IMAGE_NAME }}:latest
           docker push ${{ env.DOCKER_IMAGE_NAME }}:latest
