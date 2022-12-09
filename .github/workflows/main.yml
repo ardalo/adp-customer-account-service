@@ -54,6 +54,7 @@ jobs:
           docker push ${{ env.DOCKER_IMAGE_NAME }}:latest
   deploy_to_gke:
     if: github.ref == 'refs/heads/main'
+    needs: docker_build_push
     runs-on: ubuntu-latest
     permissions:
       contents: read
