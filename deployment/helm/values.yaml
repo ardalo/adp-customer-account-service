@@ -49,6 +49,5 @@ ingress:
       match: PathPrefix(`/`)
       priority: 1
       middlewareSpec:
-        replacePathRegex:
-          regex: ^(/.*)
-          replacement: /api/pages/404?originalPath=$1
+        replacePath:
+          path: /api/pages/global-404
