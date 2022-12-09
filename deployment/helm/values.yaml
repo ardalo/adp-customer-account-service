@@ -50,5 +50,5 @@ ingress:
       priority: 1
       middlewareSpec:
         replacePathRegex:
-          regex: ^/(.*)
-          replacement: /api/pages/404
+          regex: ^(/.*)
+          replacement: /api/pages/404?originalPath=$1
