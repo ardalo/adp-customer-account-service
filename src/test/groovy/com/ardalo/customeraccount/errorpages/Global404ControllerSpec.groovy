@@ -17,7 +17,7 @@ class Global404ControllerSpec extends Specification {
     def result = mockMvc.perform(MockMvcRequestBuilders.get("/api/pages/global-404")).andReturn()
 
     then:
-    result.response.status == 404
+    result.response.status == 200
     result.response.contentAsString.contains("<h1>404 Not Found</h1>")
   }
 }
