@@ -27,6 +27,11 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - containerPort: {{ .Values.app.internalPort }}
+          env:
+            - name: SPRINGDOC_SWAGGERUI_PATH
+              value: /internal/adp-customer-account-service/
+            - name: SPRINGDOC_APIDOCS_PATH
+              value: /internal/adp-customer-account-service/v3/api-docs
           resources:
             requests:
               memory: {{ .Values.app.minMemory }}

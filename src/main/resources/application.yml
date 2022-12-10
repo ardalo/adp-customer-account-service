@@ -19,3 +19,4 @@ springdoc:
     displayRequestDuration: true
     path: /apidoc
     tryItOutEnabled: true
+    use-root-path: true
