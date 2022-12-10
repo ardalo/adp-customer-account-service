@@ -3,8 +3,8 @@ rollingUpdateMaxSurge: 1
 rollingUpdateMaxUnavailable: 1
 
 image:
-  repository: ardalo/adp-customer-account-service
-  tag: latest
+  repository: overridden_during_deployment_via_helm_upgrade
+  tag: overridden_during_deployment_via_helm_upgrade
   pullPolicy: Always
 
 app:

@@ -74,10 +74,11 @@ jobs:
           helm upgrade \
             $DEPLOYMENT_NAME \
             deployment/helm \
+            --set image.repository=${{ env.DOCKER_IMAGE_NAME }} \
+            --set image.tag=${{ github.sha }} \
             --atomic \
             --cleanup-on-fail \
             --debug \
-            --force \
             --install \
             --timeout 3m \
             --values deployment/helm/values.yaml \
