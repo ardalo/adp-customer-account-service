@@ -6,7 +6,7 @@
 Ardalo Digital Platform service taking care of the customer account domain.
 
 ## Quick Start
-* Start application and find API docs at http://localhost:8080/apidoc
+* Start application and find API docs at `http://localhost:8080`
   ```console
   $ ./gradlew bootRun
   ```
@@ -18,7 +18,7 @@ Ardalo Digital Platform service taking care of the customer account domain.
   ```console
   $ ./gradlew check jacocoTestReport
   ```
-* Build docker image via gradle and run docker container via `docker compose`. Find API docs at http://localhost:8080/apidoc
+* Build docker image via gradle and run docker container via `docker compose`. Find API docs at `http://localhost:8080`
   ```console
   $ ./gradlew bootBuildImage --imageName=ardalo/adp-customer-account-service
   $ docker compose up
@@ -29,4 +29,4 @@ Ardalo Digital Platform service taking care of the customer account domain.
   ```
 
 ## API Documentation
-Swagger UI is accessible via `/apidoc`
+Swagger UI is accessible via root path `/`
