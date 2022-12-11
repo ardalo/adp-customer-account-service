@@ -29,7 +29,7 @@ spec:
             - containerPort: {{ .Values.app.internalPort }}
           env:
             - name: SPRINGDOC_SWAGGERUI_CONFIGURL
-              value: /internal/adp-customer-account-service/v3/api-docs
+              value: http://35.193.141.187/internal/adp-customer-account-service/v3/api-docs
           resources:
             requests:
               memory: {{ .Values.app.minMemory }}
