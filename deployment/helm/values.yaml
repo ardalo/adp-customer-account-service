@@ -1,6 +1,6 @@
 replicaCount: 1
 rollingUpdateMaxSurge: 1
-rollingUpdateMaxUnavailable: 1
+rollingUpdateMaxUnavailable: 0
 
 image:
   repository: overridden_during_deployment_via_helm_upgrade
