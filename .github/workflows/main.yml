@@ -8,6 +8,7 @@ env:
   GKE_CLUSTER: autopilot-cluster-1
   GKE_ZONE: us-central1
   DEPLOYMENT_NAME: adp-customer-account-service
+  ARDALO_DIGITAL_PLATFORM_BASE_URL: http://35.193.141.187/
 
 jobs:
   build_test_analyze:
@@ -85,3 +86,22 @@ jobs:
             --wait
           kubectl rollout status deployment/$DEPLOYMENT_NAME
           kubectl get services -o wide
+  smoke_tests:
+    needs: deploy_to_gke
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate Swagger UI accessible via root path
+        uses: indiesdev/curl@v1.1
+        with:
+          url: ${{ env.ARDALO_DIGITAL_PLATFORM_BASE_URL }}internal/adp-customer-account-service/
+          accept: 200
+      - name: Validate Swagger UI availability
+        uses: indiesdev/curl@v1.1
+        with:
+          url: ${{ env.ARDALO_DIGITAL_PLATFORM_BASE_URL }}internal/adp-customer-account-service/swagger-ui/index.html
+          accept: 200
+      - name: Validate Swagger UI JSON availability
+        uses: indiesdev/curl@v1.1
+        with:
+          url: ${{ env.ARDALO_DIGITAL_PLATFORM_BASE_URL }}internal/adp-customer-account-service/v3/api-docs
+          accept: 200
