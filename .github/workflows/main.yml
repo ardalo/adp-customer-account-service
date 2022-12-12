@@ -90,19 +90,27 @@ jobs:
     # TODO: Change to deploy_to_gke
     needs: build_test_analyze
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - name: Validate Swagger UI accessible via root path
+            path: internal/adp-customer-account-service/
+            acceptedStatusCodes: 200
+          - name: Validate Swagger UI availability
+            path: internal/adp-customer-account-service/swagger-ui/index.html
+            acceptedStatusCodes: 200
+          - name: Validate Swagger UI JSON availability
+            path: internal/adp-customer-account-service/v3/api-docs
+            acceptedStatusCodes: 200
+          - name: Validate global 404 page availability via direct access
+            path: internal/adp-customer-account-service/api/pages/global-404
+            acceptedStatusCodes: 200
+          - name: Validate global 404 page
+            path: page-does-not-exist
+            acceptedStatusCodes: 404
     steps:
-      - name: Validate Swagger UI accessible via root path
+      - name: ${{ matrix.name }}
         uses: indiesdev/curl@v1.1
         with:
-          url: ${{ env.ARDALO_DIGITAL_PLATFORM_BASE_URL }}internal/adp-customer-account-service/
-          accept: 200
-      - name: Validate Swagger UI availability
-        uses: indiesdev/curl@v1.1
-        with:
-          url: ${{ env.ARDALO_DIGITAL_PLATFORM_BASE_URL }}internal/adp-customer-account-service/swagger-ui/index.html
-          accept: 200
-      - name: Validate Swagger UI JSON availability
-        uses: indiesdev/curl@v1.1
-        with:
-          url: ${{ env.ARDALO_DIGITAL_PLATFORM_BASE_URL }}internal/adp-customer-account-service/v3/api-docs
-          accept: 200
+          url: ${{ env.ARDALO_DIGITAL_PLATFORM_BASE_URL }}${{ matrix.path }}
+          accept: ${{ matrix.acceptedStatusCodes }}
