@@ -51,9 +51,5 @@ ingress:
       middlewareSpec:
         replacePath:
           path: /api/pages/global-404
-    - id: internal-openapi
-      match: PathPrefix(`/internal/adp-customer-account-service/`)
-      middlewareSpec:
-        stripPrefix:
-          prefixes:
-            - /internal/adp-customer-account-service
+    - id: direct-service-access
+      match: Host(`adp-customer-account-service.api.ardalo.com`)

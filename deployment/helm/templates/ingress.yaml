@@ -12,14 +12,18 @@ spec:
       services:
         - name: {{ $.Release.Name }}
           port: {{ $.Values.service.externalPort }}
+{{ if .middlewareSpec }}
       middlewares:
         - name: "{{ $.Release.Name }}-ingress-route-{{ .id }}-path-rewriter"
       {{ if .priority }}priority: {{ .priority }}{{ end }}
+{{ end }}
+{{ if .middlewareSpec }}
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
 metadata:
   name: "{{ $.Release.Name }}-ingress-route-{{ .id }}-path-rewriter"
 spec: {{- .middlewareSpec | toYaml | trim | nindent 2 }}
+{{ end }}
 ---
 {{- end }}

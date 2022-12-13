@@ -8,7 +8,6 @@ env:
   GKE_CLUSTER: autopilot-cluster-1
   GKE_ZONE: us-central1
   DEPLOYMENT_NAME: adp-customer-account-service
-  ARDALO_DIGITAL_PLATFORM_BASE_URL: http://35.193.141.187/
 
 jobs:
   build_test_analyze:
@@ -92,25 +91,26 @@ jobs:
     strategy:
       matrix:
         include:
+          - name: Validate direct API access
+            path: http://adp-customer-account-service.api.ardalo.com/prometheus-metrics
+            acceptedStatusCodes: 200
           - name: Validate Swagger UI accessible via root path
-            path: internal/adp-customer-account-service/
+            path: http://adp-customer-account-service.api.ardalo.com/
             acceptedStatusCodes: 200
           - name: Validate Swagger UI availability
-            path: internal/adp-customer-account-service/swagger-ui/index.html
+            path: http://adp-customer-account-service.api.ardalo.com/swagger-ui/index.html
             acceptedStatusCodes: 200
           - name: Validate Swagger UI JSON availability
-            path: internal/adp-customer-account-service/v3/api-docs
-            acceptedStatusCodes: 200
-          - name: Validate global 404 page availability via direct access
-            path: internal/adp-customer-account-service/api/pages/global-404
+            path: http://adp-customer-account-service.api.ardalo.com/v3/api-docs
             acceptedStatusCodes: 200
           - name: Validate global 404 page
-            path: page-does-not-exist
+            path: http://ardalo.com/page-does-not-exist
             acceptedStatusCodes: 200 #TODO: The 404 page should return 404 Not Found. Not implemented yet as Traefik has not middleware for response code override out of the box
     steps:
       - name: ${{ matrix.name }}
         uses: indiesdev/curl@v1.1
         with:
-          url: ${{ env.ARDALO_DIGITAL_PLATFORM_BASE_URL }}${{ matrix.path }}
+          url: ${{ matrix.path }}
           accept: ${{ matrix.acceptedStatusCodes }}
-          timeout: 3000
+          timeout: 5000
+          retries: 2

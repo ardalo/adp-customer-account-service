@@ -5,7 +5,10 @@
 
 Ardalo Digital Platform service taking care of the customer account domain.
 
-## Quick Start
+## Infrastructure
+* [Swagger UI](http://adp-customer-account-service.api.ardalo.com/)
+
+## Local Development
 * Start application and find API docs at `http://localhost:8080`
   ```console
   $ ./gradlew bootRun
@@ -27,6 +30,3 @@ Ardalo Digital Platform service taking care of the customer account domain.
   ```console
   $ ./gradlew dependencyUpdates -Drevision=release
   ```
-
-## API Documentation
-Swagger UI is accessible via root path `/`
