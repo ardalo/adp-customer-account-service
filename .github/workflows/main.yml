@@ -94,19 +94,19 @@ jobs:
       matrix:
         include:
           - name: Validate direct API access
-            path: ${{ $.env.SERVICE_BASE_URL }}/prometheus-metrics
+            path: ${{ $SERVICE_BASE_URL }}/prometheus-metrics
             acceptedStatusCodes: 200
           - name: Validate Swagger UI accessible via root path
-            path: ${{ $.env.SERVICE_BASE_URL }}/
+            path: ${{ github.env.SERVICE_BASE_URL }}/
             acceptedStatusCodes: 200
           - name: Validate Swagger UI availability
-            path: ${{ $.env.SERVICE_BASE_URL }}/swagger-ui/index.html
+            path: ${{ github.env.SERVICE_BASE_URL }}/swagger-ui/index.html
             acceptedStatusCodes: 200
           - name: Validate Swagger UI JSON availability
-            path: ${{ $.env.ARDALO_DIGITAL_PLATFORM_BASE_URL }}/v3/api-docs
+            path: ${{ github.env.ARDALO_DIGITAL_PLATFORM_BASE_URL }}/v3/api-docs
             acceptedStatusCodes: 200
           - name: Validate global 404 page
-            path: ${{ $.env.ARDALO_DIGITAL_PLATFORM_BASE_URL }}/page-does-not-exist
+            path: ${{ github.env.ARDALO_DIGITAL_PLATFORM_BASE_URL }}/page-does-not-exist
             acceptedStatusCodes: 200 #TODO: The 404 page should return 404 Not Found. Not implemented yet as Traefik has not middleware for response code override out of the box
     steps:
       - name: ${{ matrix.name }}
