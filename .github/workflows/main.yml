@@ -113,3 +113,4 @@ jobs:
         with:
           url: ${{ env.ARDALO_DIGITAL_PLATFORM_BASE_URL }}${{ matrix.path }}
           accept: ${{ matrix.acceptedStatusCodes }}
+          timeout: 3000
