@@ -94,7 +94,7 @@ jobs:
       matrix:
         include:
           - name: Validate direct API access
-            path: ${{ $SERVICE_BASE_URL }}/prometheus-metrics
+            path: $SERVICE_BASE_URL/prometheus-metrics
             acceptedStatusCodes: 200
           - name: Validate Swagger UI accessible via root path
             path: ${{ github.env.SERVICE_BASE_URL }}/
