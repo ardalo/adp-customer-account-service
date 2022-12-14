@@ -18,6 +18,6 @@ class FrontpageControllerSpec extends Specification {
 
     then:
     result.response.status == 200
-    result.response.contentAsString.contains("<h1>Welcome to the Ardalo Digital Platform Showcase</h1>")
+    result.response.contentAsString.contains("<title>Ardalo Digital Platform Showcase</title>")
   }
 }
