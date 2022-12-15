@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+  <meta charset="utf-8" />
   <title>My Account</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
 <div class="frontpage-content-wrapper">
@@ -12,5 +13,19 @@
   <p><a href="/register">Register</a></p>
   <p><a href="/login">Login</a></p>
 </div>
+
+
+<footer class="bg-white mx-auto py-8 px-4 mt-8 pt-8 border-t border-gray-200">
+  <p class="text-base text-center text-gray-400 md:mt-0">
+    &copy; 2022 Torsten Blasche. All rights reserved.
+  </p>
+  <div class="text-center p-4">
+    <a href="/" class="mx-1 hover:text-blue-600">Home</a>
+    <a href="/login" class="mx-1 hover:text-blue-600">Login</a>
+    <a href="/register" class="mx-1 hover:text-blue-600">Register</a>
+    <a href="/my/account" class="mx-1 hover:text-blue-600">My Account</a>
+    <a href="/does-not-exist" class="mx-1 hover:text-blue-600">404</a>
+  </div>
+</footer>
 </body>
 </html>
