@@ -18,6 +18,6 @@ class Global404ControllerSpec extends Specification {
 
     then:
     result.response.status == 200
-    result.response.contentAsString.contains("<h1>404 Not Found</h1>")
+    result.response.contentAsString.contains("<title>404 Not Found</title>")
   }
 }
