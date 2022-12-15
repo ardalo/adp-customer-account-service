@@ -18,6 +18,6 @@ class RegisterControllerSpec extends Specification {
 
     then:
     result.response.status == 200
-    result.response.contentAsString.contains("<h1>This is the register page</h1>")
+    result.response.contentAsString.contains("<title>Register</title>")
   }
 }
