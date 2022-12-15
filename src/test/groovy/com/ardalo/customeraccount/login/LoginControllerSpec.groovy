@@ -18,6 +18,6 @@ class LoginControllerSpec extends Specification {
 
     then:
     result.response.status == 200
-    result.response.contentAsString.contains("<h1>This is the login page</h1>")
+    result.response.contentAsString.contains("<title>Login</title>")
   }
 }
