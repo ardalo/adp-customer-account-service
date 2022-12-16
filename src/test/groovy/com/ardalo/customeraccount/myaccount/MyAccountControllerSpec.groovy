@@ -18,6 +18,6 @@ class MyAccountControllerSpec extends Specification {
 
     then:
     result.response.status == 200
-    result.response.contentAsString.contains("<h1>This is the my account page</h1>")
+    result.response.contentAsString.contains("<title>My Account</title>")
   }
 }
