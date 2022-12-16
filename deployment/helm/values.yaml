@@ -30,6 +30,11 @@ service:
 ingress:
   className: traefik
   routes:
+    - id: frontpage
+      match: Path(`/`)
+      middlewareSpec:
+        replacePath:
+          path: /api/pages/frontpage
     - id: login
       match: Path(`/login`)
       middlewareSpec:

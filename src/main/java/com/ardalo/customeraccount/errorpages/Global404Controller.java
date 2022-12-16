@@ -16,8 +16,6 @@ public class Global404Controller {
    */
   @GetMapping("/api/pages/global-404")
   public ModelAndView global404Page(@RequestHeader(name = "X-Replaced-Path", required = false) Optional<String> originalPath) {
-    ModelAndView modelAndView = new ModelAndView("global404Page");
-    modelAndView.getModel().put("originalPath", originalPath.orElse("n/a"));
-    return modelAndView;
+    return new ModelAndView("global404Page");
   }
 }
