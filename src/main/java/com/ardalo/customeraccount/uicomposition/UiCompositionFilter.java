@@ -81,17 +81,26 @@ public class UiCompositionFilter extends OncePerRequestFilter {
 
   //TODO: Implement
   private String applyTransclusion(String responseBody) {
-    //TODO: Initialize once. Move to RestTemplate
-    var client = HttpClient.newHttpClient();
 
-    var request = HttpRequest.newBuilder(URI.create("http://adp-customer-account-service.api.ardalo.com/api/fragments/footer")).build();
-    HttpResponse<String> response = null;
-    try {
-      response = client.send(request, HttpResponse.BodyHandlers.ofString());
-    } catch (IOException | InterruptedException e) {
-      LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
+    //TODO: Prevent infinite loop - call footer which calls footer which calls footer, ...
+    if (responseBody.contains("<fragment src=")) {
+      //TODO: Initialize once. Move to RestTemplate
+      var client = HttpClient.newHttpClient();
+
+      var request = HttpRequest.newBuilder()
+        .uri(URI.create("http://adp-customer-account-service.api.ardalo.com/api/fragments/footer"))
+        .GET()
+        .build();
+      HttpResponse<String> response = null;
+      try {
+        response = client.send(request, HttpResponse.BodyHandlers.ofString());
+      } catch (IOException | InterruptedException e) {
+        LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
+      }
+
+      return responseBody.replaceAll("<fragment src=\"([^\"]+)\" />", Optional.ofNullable(response).map(HttpResponse::body).orElse("<!-- Server Side Dynamic UI Composition took place -->"));
     }
 
-    return responseBody.replaceAll("<fragment src=\"([^\"]+)\" />", Optional.ofNullable(response).map(HttpResponse::body).orElse("<!-- Server Side Dynamic UI Composition took place -->"));
+    return responseBody;
   }
 }
