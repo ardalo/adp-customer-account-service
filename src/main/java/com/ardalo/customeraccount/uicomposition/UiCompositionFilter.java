@@ -10,6 +10,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.Optional;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
@@ -83,13 +84,12 @@ public class UiCompositionFilter extends OncePerRequestFilter {
     //TODO: Initialize once. Move to RestTemplate
     var client = HttpClient.newHttpClient();
 
-    var request = HttpRequest.newBuilder(URI.create("http://adp-customer-account-service.api.ardalo.com/api/fragments/footer"))
-      .build();
+    var request = HttpRequest.newBuilder(URI.create("http://adp-customer-account-service.api.ardalo.com/api/fragments/footer")).build();
     HttpResponse<String> response = null;
     try {
       response = client.send(request, HttpResponse.BodyHandlers.ofString());
     } catch (IOException | InterruptedException e) {
-      e.printStackTrace();
+      LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
     }
 
     return responseBody.replaceAll("<fragment src=\"([^\"]+)\" />", Optional.ofNullable(response).map(HttpResponse::body).orElse("<!-- Server Side Dynamic UI Composition took place -->"));
