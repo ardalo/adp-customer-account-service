@@ -10,7 +10,7 @@ public class RegisterController {
 
   private final String footerUrl;
 
-  RegisterController(@Value("${ui.footer-url}") String footerUrl) {
+  public RegisterController(@Value("${ui.footer-url}") String footerUrl) {
     this.footerUrl = footerUrl;
   }
 

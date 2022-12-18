@@ -12,7 +12,7 @@ public class Global404Controller {
 
   private final String footerUrl;
 
-  Global404Controller(@Value("${ui.footer-url}") String footerUrl) {
+  public Global404Controller(@Value("${ui.footer-url}") String footerUrl) {
     this.footerUrl = footerUrl;
   }
 

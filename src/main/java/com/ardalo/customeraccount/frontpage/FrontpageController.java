@@ -10,7 +10,7 @@ public class FrontpageController {
 
   private final String footerUrl;
 
-  FrontpageController(@Value("${ui.footer-url}") String footerUrl) {
+  public FrontpageController(@Value("${ui.footer-url}") String footerUrl) {
     this.footerUrl = footerUrl;
   }
 

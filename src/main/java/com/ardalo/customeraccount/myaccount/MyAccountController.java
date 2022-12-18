@@ -10,7 +10,7 @@ public class MyAccountController {
 
   private final String footerUrl;
 
-  MyAccountController(@Value("${ui.footer-url}") String footerUrl) {
+  public MyAccountController(@Value("${ui.footer-url}") String footerUrl) {
     this.footerUrl = footerUrl;
   }
 

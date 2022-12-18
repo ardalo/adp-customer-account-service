@@ -10,7 +10,7 @@ public class LoginController {
 
   private final String footerUrl;
 
-  LoginController(@Value("${ui.footer-url}") String footerUrl) {
+  public LoginController(@Value("${ui.footer-url}") String footerUrl) {
     this.footerUrl = footerUrl;
   }
 
