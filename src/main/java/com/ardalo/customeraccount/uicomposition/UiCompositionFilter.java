@@ -5,12 +5,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 import java.util.Optional;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
@@ -21,6 +16,12 @@ import org.springframework.web.util.WebUtils;
 
 @Component
 public class UiCompositionFilter extends OncePerRequestFilter {
+
+  private final TransclusionProcessor transclusionProcessor;
+
+  public UiCompositionFilter(TransclusionProcessor transclusionProcessor) {
+    this.transclusionProcessor = transclusionProcessor;
+  }
 
   @Override
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -44,7 +45,7 @@ public class UiCompositionFilter extends OncePerRequestFilter {
     if (shouldApplyTransclusion(responseWrapper)) {
       String encoding = getResponseBodyCharacterEncoding(responseWrapper);
       String originalResponseBody = new String(responseWrapper.getContentAsByteArray(), encoding);
-      String processedResponseBody = applyTransclusion(originalResponseBody);
+      String processedResponseBody = transclusionProcessor.applyTransclusion(originalResponseBody);
       responseWrapper.resetBuffer();
       responseWrapper.getOutputStream().write(processedResponseBody.getBytes(encoding));
     }
@@ -77,30 +78,5 @@ public class UiCompositionFilter extends OncePerRequestFilter {
 
   protected String getResponseBodyCharacterEncoding(ContentCachingResponseWrapper responseWrapper) {
     return Optional.ofNullable(responseWrapper.getCharacterEncoding()).orElse(WebUtils.DEFAULT_CHARACTER_ENCODING);
-  }
-
-  //TODO: Implement
-  private String applyTransclusion(String responseBody) {
-
-    //TODO: Prevent infinite loop - call footer which calls footer which calls footer, ...
-    if (responseBody.contains("<fragment src=")) {
-      //TODO: Initialize once. Move to RestTemplate
-      var client = HttpClient.newHttpClient();
-
-      var request = HttpRequest.newBuilder()
-        .uri(URI.create("http://adp-customer-account-service.api.ardalo.com/api/fragments/footer"))
-        .GET()
-        .build();
-      HttpResponse<String> response = null;
-      try {
-        response = client.send(request, HttpResponse.BodyHandlers.ofString());
-      } catch (IOException | InterruptedException e) {
-        LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
-      }
-
-      return responseBody.replaceAll("<fragment src=\"([^\"]+)\" />", Optional.ofNullable(response).map(HttpResponse::body).orElse("<!-- Server Side Dynamic UI Composition took place -->"));
-    }
-
-    return responseBody;
   }
 }
