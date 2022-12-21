@@ -6,7 +6,7 @@ import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import spock.lang.Specification
 
-@WebMvcTest
+@WebMvcTest(FooterController)
 class FooterControllerSpec extends Specification {
 
   @Autowired

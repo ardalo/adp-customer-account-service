@@ -1,4 +1,4 @@
-package com.ardalo.customeraccount.frontpage
+package com.ardalo.customeraccount.login
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
@@ -6,7 +6,7 @@ import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import spock.lang.Specification
 
-@WebMvcTest
+@WebMvcTest(LoginController)
 class LoginControllerSpec extends Specification {
 
   @Autowired
