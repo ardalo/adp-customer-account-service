@@ -1,6 +1,6 @@
 # Customer-Account-Service of the Ardalo Digital Platform
-![Build Status](https://github.com/ardalo/adp-customer-account-service/workflows/Build/badge.svg)
-![License](https://img.shields.io/github/license/ardalo/adp-customer-account-service)
+[![Build Status](https://github.com/ardalo/adp-customer-account-service/actions/workflows/main.yml/badge.svg)](https://github.com/ardalo/adp-customer-account-service/actions/workflows/main.yml)
+[![License](https://img.shields.io/github/license/ardalo/adp-customer-account-service)](https://github.com/ardalo/adp-customer-account-service/blob/main/LICENSE)
 [![Code Coverage](https://sonarcloud.io/api/project_badges/measure?project=ardalo_adp-customer-account-service&metric=coverage)](https://sonarcloud.io/summary/new_code?id=ardalo_adp-customer-account-service)
 
 Ardalo Digital Platform service taking care of the customer account domain.
@@ -26,7 +26,7 @@ Ardalo Digital Platform service taking care of the customer account domain.
   $ ./gradlew bootBuildImage --imageName=ardalo/adp-customer-account-service
   $ docker compose up
   ```
-* Check for updated dependencies via [Gradle Versions Plugin](https://github.com/ben-manes/gradle-versions-plugin)
+* Check for outdated dependencies via [Gradle Versions Plugin](https://github.com/ben-manes/gradle-versions-plugin)
   ```console
   $ ./gradlew dependencyUpdates -Drevision=release
   ```

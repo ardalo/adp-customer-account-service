@@ -21,17 +21,6 @@
     </div>
   </div>
 </main>
-<footer class="bg-white py-8 mt-8 border-t border-gray-200">
-  <p class="text-base text-center text-gray-400">
-    &copy; 2022 Torsten Blasche. All rights reserved.
-  </p>
-  <div class="text-center p-4">
-    <a href="/" class="mx-1 hover:text-blue-600">Home</a>
-    <a href="/login" class="mx-1 hover:text-blue-600">Login</a>
-    <a href="/register" class="mx-1 hover:text-blue-600">Register</a>
-    <a href="/my/account" class="mx-1 hover:text-blue-600">My Account</a>
-    <a href="/does-not-exist" class="mx-1 hover:text-blue-600">404</a>
-  </div>
-</footer>
+<fragment th:src="${footerUrl}" />
 </body>
 </html>
