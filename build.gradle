@@ -5,11 +5,11 @@ plugins {
   id 'jacoco'
   id 'java'
   id 'org.sonarqube' version '3.5.0.2730'
-  id 'org.springframework.boot' version '3.0.0'
+  id 'org.springframework.boot' version '3.0.1'
 }
 
 group = 'com.ardalo'
-sourceCompatibility = '17'
+sourceCompatibility = '19'
 
 repositories {
   mavenCentral()
@@ -17,6 +17,7 @@ repositories {
 
 dependencies {
   implementation 'ch.qos.logback:logback-access:1.4.5' // version must match ch.qos.logback:logback-classic from spring-boot-starter-logging. See ./gradlew -q dependencies
+  implementation 'io.github.ableron:ableron-spring-boot-starter:0.0.2'
   implementation 'net.logstash.logback:logstash-logback-encoder:7.2'
   implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
   implementation 'org.springframework.boot:spring-boot-starter-actuator'
@@ -24,7 +25,7 @@ dependencies {
   implementation 'org.springframework.boot:spring-boot-starter-web'
   runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
   testImplementation 'io.github.joke:spock-outputcapture:3.0.1'
-  testImplementation 'org.apache.groovy:groovy-all:4.0.6'
+  testImplementation 'org.apache.groovy:groovy-all:4.0.7'
   testImplementation 'org.spockframework:spock-core:2.4-M1-groovy-4.0'
   testImplementation 'org.spockframework:spock-spring:2.4-M1-groovy-4.0'
   testImplementation 'org.springframework.boot:spring-boot-starter-test'
