@@ -13,12 +13,11 @@ sourceCompatibility = '19'
 
 repositories {
   mavenCentral()
-  mavenLocal()
 }
 
 dependencies {
   implementation 'ch.qos.logback:logback-access:1.4.5' // version must match ch.qos.logback:logback-classic from spring-boot-starter-logging. See ./gradlew -q dependencies
-  implementation 'io.github.ableron:ableron-spring-boot-starter:0.0.3-SNAPSHOT'
+  implementation 'io.github.ableron:ableron-spring-boot-starter:0.0.2'
   implementation 'net.logstash.logback:logstash-logback-encoder:7.2'
   implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
   implementation 'org.springframework.boot:spring-boot-starter-actuator'
