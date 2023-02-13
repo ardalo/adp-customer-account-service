@@ -23,4 +23,4 @@ springdoc:
     use-root-path: true
 
 ui:
-  footer-url: http://adp-customer-account-service.api.ardalo.com/api/fragments/footer
+  footer-url: http://localhost:8080/api/fragments/footer
