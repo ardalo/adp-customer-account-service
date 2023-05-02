@@ -30,3 +30,7 @@ Ardalo Digital Platform service taking care of the customer account domain.
   ```console
   $ ./gradlew dependencyUpdates -Drevision=release
   ```
+* Update gradle wrapper to latest gradle version
+  ```console
+  $ ./gradlew wrapper --gradle-version latest
+  ```
