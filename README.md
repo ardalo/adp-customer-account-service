@@ -8,7 +8,7 @@ Ardalo Digital Platform service taking care of the customer account domain.
 ## Infrastructure
 * [Swagger UI](http://adp-customer-account-service.api.ardalo.com/)
 
-## Local Development
+## Quick Start
 * Start application and find API docs at `http://localhost:8080`
   ```console
   $ ./gradlew bootRun
