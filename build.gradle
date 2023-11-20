@@ -10,7 +10,7 @@ plugins {
 }
 
 group = 'com.ardalo'
-sourceCompatibility = '21'
+sourceCompatibility = '20'
 
 repositories {
   mavenCentral()
