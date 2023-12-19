@@ -16,7 +16,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - uses: actions/setup-java@v3
+      - uses: actions/setup-java@v4
         with:
           java-version: 21
           distribution: temurin
@@ -31,7 +31,7 @@ jobs:
     continue-on-error: true
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-java@v3
+      - uses: actions/setup-java@v4
         with:
           java-version: 21
           distribution: temurin
@@ -45,7 +45,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - uses: actions/setup-java@v3
+      - uses: actions/setup-java@v4
         with:
           java-version: 21
           distribution: temurin
@@ -64,65 +64,65 @@ jobs:
         run: |
           ./gradlew bootBuildImage --imageName=${{ env.DOCKER_IMAGE_NAME }}:latest
           docker push ${{ env.DOCKER_IMAGE_NAME }}:latest
-#  deploy_to_gke:
-#    if: github.ref == 'refs/heads/main'
-#    needs: docker_build_push
-#    runs-on: ubuntu-latest
-#    permissions:
-#      contents: read
-#      id-token: write
-#    steps:
-#      - uses: actions/checkout@v4
-#      - name: Authenticate to Google Cloud
-#        uses: google-github-actions/auth@v1
-#        with:
-#          credentials_json: '${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}'
-#      - uses: google-github-actions/get-gke-credentials@v1
-#        with:
-#          cluster_name: ${{ env.GKE_CLUSTER }}
-#          location: ${{ env.GKE_ZONE }}
-#      - name: Deploy
-#        run: |-
-#          helm upgrade \
-#            $DEPLOYMENT_NAME \
-#            deployment/helm \
-#            --set image.repository=${{ env.DOCKER_IMAGE_NAME }} \
-#            --set image.tag=${{ github.sha }} \
-#            --atomic \
-#            --cleanup-on-fail \
-#            --debug \
-#            --install \
-#            --timeout 3m \
-#            --values deployment/helm/values.yaml \
-#            --wait
-#          kubectl rollout status deployment/$DEPLOYMENT_NAME
-#          kubectl get services -o wide
-#  smoke_tests:
-#    needs: deploy_to_gke
-#    runs-on: ubuntu-latest
-#    strategy:
-#      matrix:
-#        include:
-#          - name: Validate direct API access
-#            path: http://adp-customer-account-service.api.ardalo.com/prometheus-metrics
-#            acceptedStatusCodes: 200
-#          - name: Validate Swagger UI accessible via root path
-#            path: http://adp-customer-account-service.api.ardalo.com/
-#            acceptedStatusCodes: 200
-#          - name: Validate Swagger UI availability
-#            path: http://adp-customer-account-service.api.ardalo.com/swagger-ui/index.html
-#            acceptedStatusCodes: 200
-#          - name: Validate Swagger UI JSON availability
-#            path: http://adp-customer-account-service.api.ardalo.com/v3/api-docs
-#            acceptedStatusCodes: 200
-#          - name: Validate global 404 page
-#            path: http://ardalo.com/page-does-not-exist
-#            acceptedStatusCodes: 200 #TODO: The 404 page should return 404 Not Found. Not implemented yet as Traefik has not middleware for response code override out of the box
-#    steps:
-#      - name: ${{ matrix.name }}
-#        uses: indiesdev/curl@v1.1
-#        with:
-#          url: ${{ matrix.path }}
-#          accept: ${{ matrix.acceptedStatusCodes }}
-#          timeout: 5000
-#          retries: 2
+  deploy_to_gke:
+    if: github.ref == 'refs/heads/main'
+    needs: docker_build_push
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: '${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}'
+      - uses: google-github-actions/get-gke-credentials@v1
+        with:
+          cluster_name: ${{ env.GKE_CLUSTER }}
+          location: ${{ env.GKE_ZONE }}
+      - name: Deploy
+        run: |-
+          helm upgrade \
+            $DEPLOYMENT_NAME \
+            deployment/helm \
+            --set image.repository=${{ env.DOCKER_IMAGE_NAME }} \
+            --set image.tag=${{ github.sha }} \
+            --atomic \
+            --cleanup-on-fail \
+            --debug \
+            --install \
+            --timeout 3m \
+            --values deployment/helm/values.yaml \
+            --wait
+          kubectl rollout status deployment/$DEPLOYMENT_NAME
+          kubectl get services -o wide
+  smoke_tests:
+    needs: deploy_to_gke
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - name: Validate direct API access
+            path: http://adp-customer-account-service.api.ardalo.com/prometheus-metrics
+            acceptedStatusCodes: 200
+          - name: Validate Swagger UI accessible via root path
+            path: http://adp-customer-account-service.api.ardalo.com/
+            acceptedStatusCodes: 200
+          - name: Validate Swagger UI availability
+            path: http://adp-customer-account-service.api.ardalo.com/swagger-ui/index.html
+            acceptedStatusCodes: 200
+          - name: Validate Swagger UI JSON availability
+            path: http://adp-customer-account-service.api.ardalo.com/v3/api-docs
+            acceptedStatusCodes: 200
+          - name: Validate global 404 page
+            path: http://ardalo.com/page-does-not-exist
+            acceptedStatusCodes: 200 #TODO: The 404 page should return 404 Not Found. Not implemented yet as Traefik has not middleware for response code override out of the box
+    steps:
+      - name: ${{ matrix.name }}
+        uses: indiesdev/curl@v1.1
+        with:
+          url: ${{ matrix.path }}
+          accept: ${{ matrix.acceptedStatusCodes }}
+          timeout: 5000
+          retries: 2
