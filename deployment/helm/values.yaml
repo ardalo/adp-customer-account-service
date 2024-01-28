@@ -13,15 +13,13 @@ app:
   maxMemory: 1Gi
   minCpu: 250m
   maxCpu: 500m
-  # liveness probe should be configured in production more like "periodSeconds: 30"
   livenessProbe:
     initialDelaySeconds: 60
-    periodSeconds: 7200
+    periodSeconds: 15
     path: /alive
     port: 8080
-  # readiness probe should be configured in production more like "periodSeconds: 10"
   readinessProbe:
-    initialDelaySeconds: 60
+    initialDelaySeconds: 10
     periodSeconds: 7200
     path: /ready
     port: 8080
