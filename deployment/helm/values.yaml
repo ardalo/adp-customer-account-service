@@ -10,9 +10,9 @@ image:
 app:
   internalPort: 8080
   minMemory: 512Mi
-  maxMemory: 512Mi
+  maxMemory: 1Gi
   minCpu: 250m
-  maxCpu: 250m
+  maxCpu: 500m
   # liveness probe should be configured in production more like "periodSeconds: 30"
   livenessProbe:
     initialDelaySeconds: 60
