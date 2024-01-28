@@ -16,9 +16,7 @@ env:
   DEPLOYMENT_NAME: adp-customer-account-service
 
 jobs:
-  deploy_to_gke:
-    if: github.ref == 'refs/heads/main'
-    needs: docker_build_push
+  deploy:
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -39,7 +37,7 @@ jobs:
             $DEPLOYMENT_NAME \
             deployment/helm \
             --set image.repository=${{ env.DOCKER_IMAGE_NAME }} \
-            --set image.tag=${{ github.sha }} \
+            --set image.tag=latest \
             --atomic \
             --cleanup-on-fail \
             --debug \
@@ -50,7 +48,7 @@ jobs:
           kubectl rollout status deployment/$DEPLOYMENT_NAME
           kubectl get services -o wide
   smoke_tests:
-    needs: deploy_to_gke
+    needs: deploy
     runs-on: ubuntu-latest
     strategy:
       matrix:
