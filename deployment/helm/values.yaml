@@ -14,13 +14,13 @@ app:
   minCpu: 250m
   maxCpu: 500m
   livenessProbe:
-    initialDelaySeconds: 60
+    initialDelaySeconds: 45
     periodSeconds: 15
     path: /alive
     port: 8080
   readinessProbe:
-    initialDelaySeconds: 10
-    periodSeconds: 7200
+    initialDelaySeconds: 45
+    periodSeconds: 10
     path: /ready
     port: 8080
 
