@@ -9,7 +9,7 @@ image:
 
 app:
   internalPort: 8080
-  minMemory: 512Mi
+  minMemory: 1Gi
   maxMemory: 1Gi
   minCpu: 250m
   maxCpu: 500m
